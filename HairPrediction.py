@@ -62,15 +62,15 @@ model = Sequential()
 model.add(keras.Input(shape=image_size + (3,))) # 64, 64, 3
 model.add(layers.Rescaling(1.0 / 255))
 
-model.add(layers.Conv2D(filters=16, kernel_size=20, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Conv2D(filters=4, kernel_size=20, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
 # layers.MaxPool2D(pool_size=(2, 2))
 
 model.add(layers.Conv2D(filters=8, kernel_size=8, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
-layers.MaxPool2D(pool_size=(2, 2))
+# layers.MaxPool2D(pool_size=(2, 2))
 
-model.add(layers.Conv2D(filters=4, kernel_size=4, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Conv2D(filters=16, kernel_size=4, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
 # layers.MaxPool2D(pool_size=(2, 2))
 
