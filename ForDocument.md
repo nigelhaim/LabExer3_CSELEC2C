@@ -27,6 +27,8 @@ F1 Score: 0.12749003984063745
 Reason: 
  your neural network may overfit, meaning that it will memorize the training data and lose its ability to generalize to new and unseen data
 
+Understanding: 
+
 ### Epochs change with MaxPool2D
 
 50 Epochs
@@ -51,4 +53,10 @@ Accuracy: 0.2857142857142857
 Precision: 0.08163265306122448
 Recall: 0.2857142857142857
 F1 Score: 0.12698412698412698
+
+Reason: Greater filters meaning more channels depth taht could lead to the reduciton of spatial resolution 
+
+Understanding:
+
+
 
