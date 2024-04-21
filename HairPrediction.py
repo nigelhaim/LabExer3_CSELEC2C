@@ -48,6 +48,17 @@ val_ds = tf.keras.preprocessing.image_dataset_from_directory(
     label_mode='categorical'
 )
 
+test_ds = tf.keras.preprocessing.image_dataset_from_directory(
+    "hair_types/",
+    validation_split=0.2,
+    subset="validation",
+    seed=1337,
+    image_size=image_size,
+    batch_size=batch_size, 
+    labels='inferred',
+    label_mode='categorical'
+)
+
 
 print(train_ds.class_names)
 
@@ -62,17 +73,17 @@ model = Sequential()
 model.add(keras.Input(shape=image_size + (3,))) # 64, 64, 3
 model.add(layers.Rescaling(1.0 / 255))
 
-model.add(layers.Conv2D(filters=4, kernel_size=20, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Conv2D(filters=8, kernel_size=20, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
-# layers.MaxPool2D(pool_size=(2, 2))
+layers.MaxPool2D(pool_size=(2, 2))
 
-model.add(layers.Conv2D(filters=8, kernel_size=8, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Conv2D(filters=16, kernel_size=8, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
-# layers.MaxPool2D(pool_size=(2, 2))
+layers.MaxPool2D(pool_size=(2, 2))
 
-model.add(layers.Conv2D(filters=16, kernel_size=4, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Conv2D(filters=32, kernel_size=4, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
-# layers.MaxPool2D(pool_size=(2, 2))
+layers.MaxPool2D(pool_size=(2, 2))
 
 model.add(layers.GlobalAveragePooling2D())
 model.add(layers.Activation("relu"))
@@ -82,7 +93,8 @@ model.add(layers.Activation("softmax"))
 tf.keras.utils.plot_model(model, to_file='model_test.png', show_shapes=True)
 
 # epochs = 1
-epochs = 50
+# epochs = 50
+epochs = 25
 
 model.compile(
     optimizer=keras.optimizers.Adam(1e-3),
@@ -108,7 +120,7 @@ import numpy as np
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
 # Make predictions on the validation data
-predictions = model.predict(val_ds)
+predictions = model.predict(test_ds)
 y_true = np.concatenate([y for x, y in val_ds], axis=0)
 
 # Convert one-hot encoded labels to integer labels
