@@ -85,6 +85,10 @@ model.add(layers.Conv2D(filters=32, kernel_size=4, strides=1, padding='valid', d
 model.add(layers.Activation("relu"))
 layers.MaxPool2D(pool_size=(2, 2))
 
+model.add(layers.Conv2D(filters=64, kernel_size=2, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Activation("relu"))
+layers.MaxPool2D(pool_size=(2, 2))
+
 model.add(layers.GlobalAveragePooling2D())
 model.add(layers.Activation("relu"))
 model.add(layers.Dense(3))
@@ -95,11 +99,13 @@ tf.keras.utils.plot_model(model, to_file='model_test.png', show_shapes=True)
 # epochs = 1
 # epochs = 50
 epochs = 25
+# epochs = 18
 
 model.compile(
-    optimizer=keras.optimizers.Adam(1e-3),
+    # optimizer=keras.optimizers.Adam(1e-3),
+    optimizer=keras.optimizers.RMSprop(1e-3),
     loss="categorical_crossentropy",
-    metrics=["accuracy"],
+    metrics=["accuracy", "precision", "categorical_accuracy"],
 )
 model.fit(train_ds, epochs=epochs, validation_data=(val_ds))
 
@@ -120,7 +126,7 @@ import numpy as np
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
 # Make predictions on the validation data
-predictions = model.predict(test_ds)
+predictions = model.predict(val_ds)
 y_true = np.concatenate([y for x, y in val_ds], axis=0)
 
 # Convert one-hot encoded labels to integer labels

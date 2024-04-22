@@ -2,6 +2,8 @@
 
 ## Notes 
 - When the model focuses on 1 or two classification it is an indication of overfitting
+- Try to balance out the metrics 
+- One higher metrics reduces the score to other metrics 
 
 ### Made an algorithm where it tests the prediction and computes the total accuracy and precision
 - Measured the accuracy, precision, recall, and F1
@@ -126,5 +128,107 @@ Precision: 0.36115362811791385
 Recall: 0.3622448979591837
 F1 Score: 0.35983576100385
 
+### Switched Kernel size of the first and last layer
+
+Accuracy: 0.3469387755102041
+Precision: 0.3278013403163463
+Recall: 0.3469387755102041
+F1 Score: 0.2974178703067482
+
+Accuracy: 0.3520408163265306
+Precision: 0.36762811627836617
+Recall: 0.3520408163265306
+F1 Score: 0.34801539306904045   
+
+### Added a new layer 
+**25 Epochs**
+Accuracy: 0.3469387755102041
+Precision: 0.3278013403163463
+Recall: 0.3469387755102041
+F1 Score: 0.2974178703067482
+
+
+Accuracy: 0.33163265306122447
+Precision: 0.34582907617475744
+Recall: 0.33163265306122447
+F1 Score: 0.32364143868870626
+
+**10 Epochs**
+Accuracy: 0.3622448979591837
+Precision: 0.13122136609745938
+Recall: 0.3622448979591837
+F1 Score: 0.192654589925858
+
+**18 Epochs**
+Accuracy: 0.3877551020408163
+Precision: 0.3827212123465051
+Recall: 0.3877551020408163
+F1 Score: 0.38402725094454415
+
+Understanding: More layers requres lesser epochs. Large epochs leads to overfitting
+
+### Change of learning rate ADAM
+
+1e-3
+
+Accuracy: 0.39285714285714285
+Precision: 0.3850461613216715
+Recall: 0.39285714285714285
+F1 Score: 0.333656713917094
+
+1e-0
+
+Precision: 0.12393273635985007
+Accuracy: 0.3520408163265306
+Precision: 0.12393273635985007
+Recall: 0.3520408163265306
+F1 Score: 0.18332691567192916
+
+1e-5
+
+Accuracy: 0.30612244897959184
+Precision: 0.1915709417229174
+Recall: 0.30612244897959184
+F1 Score: 0.21847795938417944
+
+1e-4
+
+Accuracy: 0.3673469387755102
+Precision: 0.5336631021551217
+Recall: 0.3673469387755102
+F1 Score: 0.3241106073016011
+
+
+Understanding: Lower learning rate means more training time. Too much training time becomes overfitting. Higer learning rate is less training time which reduces accuracy 
+
+### Change of Optimizer RMSProp 1e-3
+
+**Adam (original)**
+Accuracy: 0.3979591836734694
+Precision: 0.4150057219149342
+Recall: 0.3979591836734694
+F1 Score: 0.36959477490337855
+
+**RMSProp**
+
+Accuracy: 0.37755102040816324
+Precision: 0.3623102465087515
+Recall: 0.37755102040816324
+F1 Score: 0.3437330826349261
+
+
+### Change of Optimizer RMSProp
+
+1e-2
+Accuracy: 0.2857142857142857
+Precision: 0.08163265306122448
+Recall: 0.2857142857142857
+F1 Score: 0.12698412698412698
+
+1e-5
+Accuracy: 0.33163265306122447
+Precision: 0.3268485390578414
+Recall: 0.33163265306122447
+F1 Score: 0.32544783618031253
 
 # Made a new dataset but suddenly the accuracy drops 
