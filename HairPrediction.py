@@ -73,19 +73,19 @@ model = Sequential()
 model.add(keras.Input(shape=image_size + (3,))) # 64, 64, 3
 model.add(layers.Rescaling(1.0 / 255))
 
-model.add(layers.Conv2D(filters=8, kernel_size=20, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Conv2D(filters=8, kernel_size=5, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
 layers.MaxPool2D(pool_size=(2, 2))
 
-model.add(layers.Conv2D(filters=16, kernel_size=8, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Conv2D(filters=16, kernel_size=5, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
 layers.MaxPool2D(pool_size=(2, 2))
 
-model.add(layers.Conv2D(filters=32, kernel_size=4, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Conv2D(filters=32, kernel_size=5, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
 layers.MaxPool2D(pool_size=(2, 2))
 
-model.add(layers.Conv2D(filters=64, kernel_size=2, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Conv2D(filters=64, kernel_size=5, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
 layers.MaxPool2D(pool_size=(2, 2))
 
@@ -99,15 +99,17 @@ tf.keras.utils.plot_model(model, to_file='model_test.png', show_shapes=True)
 # epochs = 1
 # epochs = 50
 epochs = 25
+# epochs = 16
 # epochs = 18
+# epochs = 20
 
 model.compile(
-    # optimizer=keras.optimizers.Adam(1e-3),
-    optimizer=keras.optimizers.RMSprop(1e-3),
+    optimizer=keras.optimizers.Adam(1e-3),
+    # optimizer=keras.optimizers.RMSprop(1e-3),
     loss="categorical_crossentropy",
     metrics=["accuracy", "precision", "categorical_accuracy"],
 )
-model.fit(train_ds, epochs=epochs, validation_data=(val_ds))
+history = model.fit(train_ds, epochs=epochs, validation_data=(val_ds))
 
 
 # img = keras.preprocessing.image.load_img(
@@ -257,3 +259,41 @@ print("Accuracy:", accuracy)
 print("Precision:", precision)
 print("Recall:", recall)
 print("F1 Score:", f1)
+
+import matplotlib.pyplot as plt
+
+def plot_history(history):
+    # Plotting the training history
+    plt.figure(figsize=(12, 5))
+
+    # Plot accuracy
+    plt.subplot(1, 2, 1)
+    plt.plot(history.history['accuracy'], label='Training Accuracy')
+    plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.title('Training and Validation Accuracy')
+    plt.legend()
+
+    # Plot loss
+    plt.subplot(1, 2, 2)
+    plt.plot(history.history['loss'], label='Training Loss')
+    plt.plot(history.history['val_loss'], label='Validation Loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('Training and Validation Loss')
+    plt.legend()
+
+    # Plot precision
+    plt.figure()
+    plt.plot(history.history['precision'], label='Training Precision')
+    plt.plot(history.history['val_precision'], label='Validation Precision')
+    plt.xlabel('Epoch')
+    plt.ylabel('Precision')
+    plt.title('Training and Validation Precision')
+    plt.legend()
+
+    plt.tight_layout()
+    plt.show()
+    
+plot_history(history)

@@ -165,6 +165,14 @@ Precision: 0.3827212123465051
 Recall: 0.3877551020408163
 F1 Score: 0.38402725094454415
 
+**16 Epochs**
+
+Accuracy: 0.3673469387755102
+Precision: 0.3922008283650539
+Recall: 0.3673469387755102
+F1 Score: 0.3575349392778134
+
+
 Understanding: More layers requres lesser epochs. Large epochs leads to overfitting
 
 ### Change of learning rate ADAM
@@ -231,4 +239,25 @@ Precision: 0.3268485390578414
 Recall: 0.33163265306122447
 F1 Score: 0.32544783618031253
 
-# Made a new dataset but suddenly the accuracy drops 
+### Same Kernel Size 
+
+Accuracy: 0.39285714285714285
+Precision: 0.2475452445128995
+Recall: 0.39285714285714285
+F1 Score: 0.2950446233539288
+
+**3x3**
+
+Accuracy: 0.3979591836734694
+Precision: 0.3939435612519941
+Recall: 0.3979591836734694
+F1 Score: 0.38078530330346316
+
+**5x5**
+
+Accuracy: 0.37755102040816324
+Precision: 0.3649562776683667
+Recall: 0.37755102040816324
+F1 Score: 0.36219608869760955
+
+**5x5 but with 25 Epochs**
