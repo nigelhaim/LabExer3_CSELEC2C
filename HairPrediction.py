@@ -73,23 +73,28 @@ model = Sequential()
 model.add(keras.Input(shape=image_size + (3,))) # 64, 64, 3
 model.add(layers.Rescaling(1.0 / 255))
 
-model.add(layers.Conv2D(filters=8, kernel_size=5, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Conv2D(filters=8, kernel_size=3, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
 layers.MaxPool2D(pool_size=(2, 2))
 
-model.add(layers.Conv2D(filters=16, kernel_size=5, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Conv2D(filters=16, kernel_size=3, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
 layers.MaxPool2D(pool_size=(2, 2))
 
-model.add(layers.Conv2D(filters=32, kernel_size=5, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Conv2D(filters=32, kernel_size=3, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
 layers.MaxPool2D(pool_size=(2, 2))
 
-model.add(layers.Conv2D(filters=64, kernel_size=5, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Conv2D(filters=64, kernel_size=3, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
 layers.MaxPool2D(pool_size=(2, 2))
 
-model.add(layers.GlobalAveragePooling2D())
+model.add(layers.Conv2D(filters=128, kernel_size=3, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Activation("relu"))
+layers.MaxPool2D(pool_size=(2, 2))
+
+#model.add(layers.GlobalAveragePooling2D())
+model.add(layers.GlobalMaxPool2D())
 model.add(layers.Activation("relu"))
 model.add(layers.Dense(3))
 # model.add(layers.Activation("softmax"))
@@ -97,15 +102,15 @@ model.add(layers.Activation("softmax"))
 tf.keras.utils.plot_model(model, to_file='model_test.png', show_shapes=True)
 
 # epochs = 1
-# epochs = 50
-epochs = 25
+# epochs = 75
+# epochs = 25
 # epochs = 16
 # epochs = 18
 # epochs = 20
-
+epochs = 50
 model.compile(
-    optimizer=keras.optimizers.Adam(1e-3),
-    # optimizer=keras.optimizers.RMSprop(1e-3),
+    # optimizer=keras.optimizers.Adam(1e-3),
+    optimizer=keras.optimizers.RMSprop(1e-3),
     loss="categorical_crossentropy",
     metrics=["accuracy", "precision", "categorical_accuracy"],
 )
@@ -264,8 +269,8 @@ import matplotlib.pyplot as plt
 
 def plot_history(history):
     # Plotting the training history
-    plt.figure(figsize=(12, 5))
 
+    plt.figure(figsize=(12, 5))
     # Plot accuracy
     plt.subplot(1, 2, 1)
     plt.plot(history.history['accuracy'], label='Training Accuracy')
