@@ -4,6 +4,12 @@ import os
 import tensorflow as tf
 from sklearn.metrics import precision_score, recall_score, f1_score
 import numpy as np
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+import numpy as np
+from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
+
 data_dir = "hair_types"
 image_extensions = [".png", ".jpg"]  # add there all your images file extensions
 
@@ -19,9 +25,20 @@ for filepath in Path(data_dir).rglob("*"):
             os.remove(filepath)
 
 
-import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import layers
+
+# Define a function to apply sharpening to images
+def sharpen_image(image):
+    # Define the sharpening kernel for each channel
+    kernel = tf.constant([[[0, -1, 0],
+                           [-1, 5, -1],
+                           [0, -1, 0]]], dtype=tf.float32)
+    # Expand the kernel to match the number of channels
+    kernel = tf.tile(kernel, [1, 1, 3])
+    # Apply convolution with the sharpening kernel
+    sharpened_image = tf.nn.conv2d(image, tf.expand_dims(tf.transpose(kernel, perm=[2, 0, 1]), axis=-1), strides=[1, 1, 1, 1], padding='SAME')
+    # Clip values to ensure they stay within valid range
+    sharpened_image = tf.clip_by_value(sharpened_image, 0, 1)
+    return sharpened_image
 
 image_size = (64, 64)
 batch_size = 32
@@ -48,18 +65,6 @@ val_ds = tf.keras.preprocessing.image_dataset_from_directory(
     label_mode='categorical'
 )
 
-test_ds = tf.keras.preprocessing.image_dataset_from_directory(
-    "hair_types/",
-    validation_split=0.2,
-    subset="validation",
-    seed=1337,
-    image_size=image_size,
-    batch_size=batch_size, 
-    labels='inferred',
-    label_mode='categorical'
-)
-
-
 print(train_ds.class_names)
 
 
@@ -73,9 +78,9 @@ model = Sequential()
 model.add(keras.Input(shape=image_size + (3,))) # 64, 64, 3
 model.add(layers.Rescaling(1.0 / 255))
 
-model.add(layers.Conv2D(filters=8, kernel_size=3, strides=1, padding='valid', dilation_rate=1))
-model.add(layers.Activation("relu"))
-layers.MaxPool2D(pool_size=(2, 2))
+# model.add(layers.Conv2D(filters=8, kernel_size=3, strides=1, padding='valid', dilation_rate=1))
+# model.add(layers.Activation("relu"))
+# layers.MaxPool2D(pool_size=(2, 2))
 
 model.add(layers.Conv2D(filters=16, kernel_size=3, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
@@ -93,7 +98,7 @@ model.add(layers.Conv2D(filters=128, kernel_size=3, strides=1, padding='valid', 
 model.add(layers.Activation("relu"))
 layers.MaxPool2D(pool_size=(2, 2))
 
-#model.add(layers.GlobalAveragePooling2D())
+# model.add(layers.GlobalAveragePooling2D())
 model.add(layers.GlobalMaxPool2D())
 model.add(layers.Activation("relu"))
 model.add(layers.Dense(3))
@@ -106,11 +111,15 @@ tf.keras.utils.plot_model(model, to_file='model_test.png', show_shapes=True)
 # epochs = 25
 # epochs = 16
 # epochs = 18
-# epochs = 20
-epochs = 50
+# epochs = 40
+# epochs = 35
+epochs = 45
+# epochs = 50
+# epochs = 100
 model.compile(
-    # optimizer=keras.optimizers.Adam(1e-3),
-    optimizer=keras.optimizers.RMSprop(1e-3),
+    optimizer=keras.optimizers.Adam(1e-3),
+    # optimizer=keras.optimizers.RMSprop(1e-3),
+    # optimizer=keras.optimizers.SGD(1e-4),
     loss="categorical_crossentropy",
     metrics=["accuracy", "precision", "categorical_accuracy"],
 )
@@ -129,8 +138,6 @@ history = model.fit(train_ds, epochs=epochs, validation_data=(val_ds))
 #     % tuple(predictions[0])
 # )
 print(val_ds)
-import numpy as np
-from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
 # Make predictions on the validation data
 predictions = model.predict(val_ds)
