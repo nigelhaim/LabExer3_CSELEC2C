@@ -98,8 +98,8 @@ model.add(layers.Conv2D(filters=128, kernel_size=3, strides=1, padding='valid', 
 model.add(layers.Activation("relu"))
 layers.MaxPool2D(pool_size=(2, 2))
 
-# model.add(layers.GlobalAveragePooling2D())
-model.add(layers.GlobalMaxPool2D())
+model.add(layers.GlobalAveragePooling2D())
+# model.add(layers.GlobalMaxPool2D())
 model.add(layers.Activation("relu"))
 model.add(layers.Dense(3))
 # model.add(layers.Activation("softmax"))
@@ -123,7 +123,10 @@ model.compile(
     loss="categorical_crossentropy",
     metrics=["accuracy", "precision", "categorical_accuracy"],
 )
-history = model.fit(train_ds, epochs=epochs, validation_data=(val_ds))
+
+callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=10)
+history = model.fit(train_ds, epochs=epochs, validation_data=(val_ds), callbacks=[callback])
+# history = model.fit(train_ds, epochs=epochs, validation_data=(val_ds))
 
 
 # img = keras.preprocessing.image.load_img(

@@ -18,7 +18,7 @@ Precision: 0.1881546269301371
 Recall: 0.29591836734693877
 F1 Score: 0.14918890633176346
 
-25 Epochs 
+25 Epochs
 
 Accuracy: 0.3469387755102041
 Precision: 0.3477267126874227
@@ -42,6 +42,31 @@ Precision: 0.08205128205128205
 Recall: 0.2857142857142857
 F1 Score: 0.12749003984063745
 
+**100 Epochs**
+
+![1714012706719](image/ForDocument/1714012706719.png)
+
+========================================================
+Correct:
+  Curly_Hair: 321
+
+  Straight_Hair: 257
+
+  Wavy_Hair: 315
+
+Incorrect:
+  Curly_Hair: 11
+
+  Straight_Hair: 63
+
+  Wavy_Hair: 16
+
+========================================================
+Accuracy: 0.29591836734693877
+Precision: 0.3284484242755528
+Recall: 0.29591836734693877
+F1 Score: 0.2745882126066458
+
 Reason:
  your neural network may overfit, meaning that it will memorize the training data and lose its ability to generalize to new and unseen data
 
@@ -61,7 +86,6 @@ Precision: 0.29926890296348424
 Recall: 0.30612244897959184
 F1 Score: 0.29962980448207066
 
-
 ![1714010533733](image/ForDocument/1714010533733.png)
 
 25 Epochs
@@ -76,6 +100,8 @@ Precision: 0.23524145133548388
 Recall: 0.35714285714285715
 F1 Score: 0.277020172230742
 
+![1714011285618](image/ForDocument/1714011285618.png)
+
 10 Epochs
 Accuracy: 0.2857142857142857
 Precision: 0.08163265306122448
@@ -86,6 +112,29 @@ Accuracy: 0.34183673469387754
 Precision: 0.22390749489424014
 Recall: 0.34183673469387754
 F1 Score: 0.269533527696793'
+
+**100 Epochs**
+
+========================================================
+Correct:
+  Curly_Hair: 311
+
+  Straight_Hair: 301
+
+  Wavy_Hair: 243
+
+Incorrect:
+  Curly_Hair: 21
+
+  Straight_Hair: 19
+
+  Wavy_Hair: 88
+
+========================================================
+Accuracy: 0.3163265306122449
+Precision: 0.3103723818009532
+Recall: 0.3163265306122449
+F1 Score: 0.2926718123146695
 
 Concluded that when applying max pooling Reduce the epochs to 25 and apply MaxPool
 
@@ -334,3 +383,114 @@ Accuracy: 0.3520408163265306
 Precision: 0.41192419825072885
 Recall: 0.3520408163265306
 F1 Score: 0.34247525544386564
+
+# Pre processing
+
+### Image sharpening
+
+Accuracy: 0.32653061224489793
+Precision: 0.33318449179654147
+Recall: 0.32653061224489793
+F1 Score: 0.32602511050503147
+
+Accuracy: 0.336734693877551
+Precision: 0.34416981922792755
+Recall: 0.336734693877551
+F1 Score: 0.33393869740351034![1714053482028](image/ForDocument/1714053482028.png)
+
+![1714053491443](image/ForDocument/1714053491443.png)
+
+### Early Stopping
+
+**Before**
+
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+Curly count: 332
+Stright count: 320
+Wavy count: 331
+========================================================
+Correct:
+  Curly_Hair: 316
+
+  Straight_Hair: 291
+
+  Wavy_Hair: 273
+
+
+Incorrect:
+  Curly_Hair: 16
+
+  Straight_Hair: 29
+
+  Wavy_Hair: 58
+
+========================================================
+Accuracy: 0.35714285714285715
+Precision: 0.3585082955383707
+Recall: 0.35714285714285715
+F1 Score: 0.3574072660811339
+
+
+**After**
+
+![alt text](image-2.png)
+![alt text](image-3.png)
+
+
+Curly count: 332
+Stright count: 320
+Wavy count: 331
+========================================================
+Correct:
+  Curly_Hair: 321
+
+  Straight_Hair: 174
+
+  Wavy_Hair: 280
+
+
+Incorrect:
+  Curly_Hair: 11
+
+  Straight_Hair: 146
+
+  Wavy_Hair: 51
+
+========================================================
+Accuracy: 0.28061224489795916
+Precision: 0.30409722268401224
+Recall: 0.28061224489795916
+F1 Score: 0.2648398841133724
+
+
+**10 Patience**
+
+![alt text](image-4.png)
+
+Curly count: 332
+Stright count: 320
+Wavy count: 331
+========================================================
+Correct:
+  Curly_Hair: 259
+
+  Straight_Hair: 214
+
+  Wavy_Hair: 163
+
+
+Incorrect:
+  Curly_Hair: 73
+
+  Straight_Hair: 106
+
+  Wavy_Hair: 168
+
+========================================================
+Accuracy: 0.3673469387755102
+Precision: 0.36418678048142333
+Recall: 0.3673469387755102
+F1 Score: 0.36484096833951063
