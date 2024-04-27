@@ -7,6 +7,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
+from tensorflow.keras.layers import Dropout
 import numpy as np
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
@@ -51,7 +52,8 @@ train_ds = tf.keras.preprocessing.image_dataset_from_directory(
     image_size=image_size,
     batch_size=batch_size,
     labels='inferred',
-    label_mode='categorical'
+    label_mode='categorical',
+    interpolation='bicubic',
 )
 
 val_ds = tf.keras.preprocessing.image_dataset_from_directory(
@@ -62,7 +64,8 @@ val_ds = tf.keras.preprocessing.image_dataset_from_directory(
     image_size=image_size,
     batch_size=batch_size, 
     labels='inferred',
-    label_mode='categorical'
+    label_mode='categorical',
+    interpolation='bicubic',
 )
 
 print(train_ds.class_names)
@@ -75,6 +78,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 
 model = Sequential()
+model.add(Dropout(0.2))
 model.add(keras.Input(shape=image_size + (3,))) # 64, 64, 3
 model.add(layers.Rescaling(1.0 / 255))
 
@@ -124,9 +128,10 @@ model.compile(
     metrics=["accuracy", "precision", "categorical_accuracy"],
 )
 
-callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=10)
-history = model.fit(train_ds, epochs=epochs, validation_data=(val_ds), callbacks=[callback])
-# history = model.fit(train_ds, epochs=epochs, validation_data=(val_ds))
+# callback = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=6)
+
+# history = model.fit(train_ds, epochs=epochs, validation_data=(val_ds), callbacks=[callback])
+history = model.fit(train_ds, epochs=epochs, validation_data=(val_ds))
 
 
 # img = keras.preprocessing.image.load_img(

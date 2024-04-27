@@ -494,3 +494,95 @@ Accuracy: 0.3673469387755102
 Precision: 0.36418678048142333
 Recall: 0.3673469387755102
 F1 Score: 0.36484096833951063
+
+### Dropout
+
+left original 
+![alt text](image-7.png)
+Curly count: 332
+Stright count: 320
+Wavy count: 331
+========================================================
+Correct:
+  Curly_Hair: 257
+
+  Straight_Hair: 196
+
+  Wavy_Hair: 163
+
+
+Incorrect:
+  Curly_Hair: 75
+
+  Straight_Hair: 124
+
+  Wavy_Hair: 168
+
+========================================================
+Accuracy: 0.3469387755102041
+Precision: 0.34351225421675524
+Recall: 0.3469387755102041
+F1 Score: 0.34449677306820164
+
+
+right applied
+
+![alt text](image-6.png)
+
+Curly count: 332
+Stright count: 320
+Wavy count: 331
+========================================================
+Correct:
+  Curly_Hair: 235
+
+  Straight_Hair: 221
+
+  Wavy_Hair: 164
+
+
+Incorrect:
+  Curly_Hair: 97
+
+  Straight_Hair: 99
+
+  Wavy_Hair: 167
+
+========================================================
+Accuracy: 0.3826530612244898
+Precision: 0.37654583774999356
+Recall: 0.3826530612244898
+F1 Score: 0.37678770971816344
+
+
+### Dropout with Early Stopping
+45 Epochs
+![](image-8.png)
+
+![alt text](image-9.png)
+
+
+Curly count: 332
+Stright count: 320
+Wavy count: 331
+========================================================
+Correct:
+  Curly_Hair: 243
+
+  Straight_Hair: 152
+
+  Wavy_Hair: 217
+
+
+Incorrect:
+  Curly_Hair: 89
+
+  Straight_Hair: 168
+
+  Wavy_Hair: 114
+
+========================================================
+Accuracy: 0.32142857142857145
+Precision: 0.3255455866557149
+Recall: 0.32142857142857145
+F1 Score: 0.3178831807785628
