@@ -78,10 +78,11 @@ from keras.models import Sequential
 from keras.layers import Dense
 
 model = Sequential()
+model.add(Dropout(0.2))
 model.add(keras.Input(shape=image_size + (3,))) # 64, 64, 3
 model.add(layers.Rescaling(1.0 / 255))
 
-# model.add(layers.Conv2D(filters=2, kernel_size=3, strides=1, padding='valid', dilation_rate=1))
+# model.add(layers.Conv2D(filters=8, kernel_size=3, strides=1, padding='valid', dilation_rate=1))
 # model.add(layers.Activation("relu"))
 # layers.MaxPool2D(pool_size=(2, 2))
 
@@ -97,15 +98,12 @@ model.add(layers.Conv2D(filters=64, kernel_size=3, strides=1, padding='valid', d
 model.add(layers.Activation("relu"))
 layers.MaxPool2D(pool_size=(2, 2))
 
-model.add(layers.Conv2D(filters=128, kernel_size=3, strides=1, padding='valid', dilation_rate=1, kernel_regularizer=keras.regularizers.L1L2(l1=1e-4, l2=1e-5)))
-# model.add(layers.Conv2D(filters=128, kernel_size=3, strides=1, padding='valid', dilation_rate=1))
+model.add(layers.Conv2D(filters=128, kernel_size=3, strides=1, padding='valid', dilation_rate=1))
 model.add(layers.Activation("relu"))
 layers.MaxPool2D(pool_size=(2, 2))
 
-model.add(Dropout(1e-3))
-
-# model.add(layers.GlobalAveragePooling2D())
-model.add(layers.GlobalMaxPool2D())
+model.add(layers.GlobalAveragePooling2D())
+# model.add(layers.GlobalMaxPool2D())
 model.add(layers.Activation("relu"))
 model.add(layers.Dense(3))
 # model.add(layers.Activation("softmax"))
@@ -121,7 +119,6 @@ tf.keras.utils.plot_model(model, to_file='model_test.png', show_shapes=True)
 # epochs = 35
 epochs = 45
 # epochs = 50
-# epochs = 60
 # epochs = 100
 model.compile(
     optimizer=keras.optimizers.Adam(1e-3),
